@@ -1,3 +1,6 @@
+from os import link
+from pyexpat import model
+from xml.dom.minidom import Identified
 from Routes.Security import get_password_hash, verify_password
 from Database.Crud.base_crud import CRUDBase
 from Models.Base_Models import Product
@@ -18,6 +21,30 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, ProductUpdate]):
     
     def read_by_key(self, db: Session, key : Any) -> List[Product]:
         return db.query(self.model).where((self.model.productName.startswith(str(key))) | (self.model.barcode == str(key))).all()
+    
+    def create(self, db: Session, product_in: List[ProductCreate]) -> str:
+        for product in product_in:
+            new_db_product = Product(
+                productName = product.productName,
+                model = product.model,
+                barcode = product.barcode,
+                quantity = product.quantity,
+                imagePath = product.imagePath,
+                price = product.price,
+                identifier = product.identifier,
+                sold = product.sold,
+                bought = product.bought,
+                market = product.market,
+                earned = 0,
+                description = "",
+                link = product.link,
+                reference = product.reference,
+                availableColors = product.availableColors,
+                materialLink = product.materialLink   
+            )
+            db.add(new_db_product)
+            db.commit()
+        return {"Success" : "Products Added!"}
     
     def __call__(self) -> str:
         return Product.id + " " + Product.productName + " " + Product.price + " " + Product.barcode

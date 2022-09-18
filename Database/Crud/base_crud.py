@@ -3,6 +3,8 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from Database.Base import Base
+from Models.Base_Models import Product
+from Schema.Product_Schema import ProductCreate
 
 
 Model = TypeVar("Model", bound=Base)
@@ -19,9 +21,6 @@ class CRUDBase(Generic[Model, CreateSchema, UpdateSchema]):
     
     def read_all(self, db: Session, skip: int = 0, limit: int = 5000) -> List[Model]:
         return db.query(self.model).offset(skip).limit(limit).all()
-    
-    def create(self):
-        return
     
     def update(self):
         return

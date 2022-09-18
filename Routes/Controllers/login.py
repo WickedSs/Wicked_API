@@ -10,18 +10,9 @@ from sqlalchemy.orm import Session
 import Database.Crud, Models, Schema
 from Settings import settings
 from Routes import Deps, Security
+from Routes.Response_models import *
 
 router = APIRouter()
-
-class ResponseSuccess(BaseModel):
-    message: str
-    status_code: Any
-    access_token: str
-    token_type: str
-    
-class ResponseFail(BaseModel):
-    message: str
-    status_code: Any
 
 
 @router.post("/login/access-token")
@@ -37,7 +28,7 @@ def login_access_token(db: Session = Depends(Deps.get_db), form_data: OAuth2Pass
     #     raise HTTPException(status_code=400, detail="Inactive user")
     else:
         access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-        return ResponseSuccess(
+        return LoginSuccess(
             message = "Success!",
             status_code = status.HTTP_200_OK,
             access_token = Security.create_access_token(user_found.userRole, user_found.username, expires_delta=access_token_expires),

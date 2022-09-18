@@ -1,18 +1,24 @@
+from cgitb import reset
 from typing import Any, List
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 import Database.Crud, Schema, Models
 import Models, Schema, random
 from Routes import Deps
 from Schema.Product_Schema import Product
+from Routes.Response_models import *
 
 router = APIRouter()
 
 
-@router.post("/product", response_model = Schema.Product)
+@router.post("/product")
 def create_product(*, db: Session = Depends(Deps.get_db), product_in: List[Schema.ProductCreate]) -> Any:
     """ Create new Product """
-    return "Working... [New Product Create]"
+    result = Database.Crud.product.create(db, product_in);
+    return ResponseSuccess(
+        message = result,
+        status_code = status.HTTP_200_OK,
+    )
 
 
 @router.get("/product_id/{key}", response_model = Schema.Product)
