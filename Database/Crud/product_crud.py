@@ -1,4 +1,4 @@
-from Routes.Config import get_password_hash, verify_password
+from Routes.Security import get_password_hash, verify_password
 from Database.Crud.base_crud import CRUDBase
 from Models.Base_Models import Product
 from Schema.Product_Schema import ProductCreate, ProductUpdate

@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Wicked API"
     ALGORITHM = "HS256"
     
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
     SECRET_KEY: str
 
