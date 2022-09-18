@@ -33,6 +33,7 @@ class ProductUpdate(ProductBase):
 
 # Properties shared by models stored in DB
 class ProductInDBBase(ProductBase):
+    id: int
     productName: str
     model: str
     barcode: str

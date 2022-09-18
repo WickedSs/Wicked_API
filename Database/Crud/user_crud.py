@@ -9,7 +9,9 @@ from sqlalchemy.orm import Session
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def __init__(self, model: Type[User]):    
         super().__init__(model)
-        
+    
+    def read_by_username(self, db: Session, username : str) -> Optional[User]:
+        return db.query(self.model).filter(self.model.username == username).first()
         
     def authenticate(self, db: Session, *, username: str, password: str) -> Optional[User]:
         user_found = self.read_by_username(db, username=username)

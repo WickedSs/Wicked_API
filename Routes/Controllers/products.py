@@ -15,25 +15,49 @@ def create_product(*, db: Session = Depends(Deps.get_db), product_in: List[Schem
     return "Working... [New Product Create]"
 
 
-@router.get("/product/{id}", response_model = Schema.Product)
-def read_product(*, db: Session = Depends(Deps.get_db), id: int) -> Any:
-    product_found = Database.Crud.product.read_single(db=db, id=id);
+@router.get("/product_id/{key}", response_model = Schema.Product)
+def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
+    product_found = Database.Crud.product.read_by_id(db=db, id=key);
+    if not product_found:
+        raise HTTPException(status_code=400, detail="Product does not exist!")
     return product_found
 
 
-@router.get("/all_product", response_model = List[Schema.Product])
+@router.get("/product_barcode/{key}", response_model = Schema.Product)
+def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
+    product_found = Database.Crud.product.read_by_barcode(db=db, barcode=key);
+    if not product_found:
+        raise HTTPException(status_code=400, detail="Product does not exist!")
+    return product_found
+
+@router.get("/product_name/{key}", response_model = List[Schema.Product])
+def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
+    product_found = Database.Crud.product.read_by_name(db=db, name=key);
+    if not product_found:
+        raise HTTPException(status_code=400, detail="Product does not exist!")
+    return product_found
+
+@router.get("/product_key/{key}", response_model = List[Schema.Product])
+def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
+    product_found = Database.Crud.product.read_by_key(db=db, key=key);
+    if not product_found:
+        raise HTTPException(status_code=400, detail="No product exist with name or barcode {}!".format(key))
+    return product_found
+
+
+@router.get("/product", response_model = List[Schema.Product])
 def read_products(*, db: Session = Depends(Deps.get_db)):
     products_found = Database.Crud.product.read_all(db=db, skip=0, limit=50);
     return products_found
 
 
-@router.put("/product/{id}", response_model = List[Schema.Product])
-def read_products(*, db: Session = Depends(Deps.get_db)):
+@router.put("/product/{key}", response_model = List[Schema.Product])
+def read_products(*, db: Session = Depends(Deps.get_db), key: Any):
     products_found = Database.Crud.product.update();
     return products_found
 
 
-@router.delete("/product/{id}", response_model = List[Schema.Product])
-def read_products(*, db: Session = Depends(Deps.get_db)):
+@router.delete("/product/{key}", response_model = List[Schema.Product])
+def read_products(*, db: Session = Depends(Deps.get_db), key: Any):
     products_found = Database.Crud.product.delete();
     return products_found

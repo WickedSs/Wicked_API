@@ -17,12 +17,6 @@ class CRUDBase(Generic[Model, CreateSchema, UpdateSchema]):
     def read_by_id(self, db: Session, id : int) -> Optional[Model]:
         return db.query(self.model).filter(self.model.id == id).first()
     
-    def read_by_username(self, db: Session, username : str) -> Optional[Model]:
-        return db.query(self.model).filter(self.model.username == username).first()
-    
-    def read_by_barcode(self, db: Session, barcode : str) -> Optional[Model]:
-        return db.query(self.model).filter(self.model.barcode == barcode).first()
-    
     def read_all(self, db: Session, skip: int = 0, limit: int = 5000) -> List[Model]:
         return db.query(self.model).offset(skip).limit(limit).all()
     

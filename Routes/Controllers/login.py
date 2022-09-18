@@ -27,7 +27,6 @@ class ResponseFail(BaseModel):
 @router.post("/login/access-token")
 def login_access_token(db: Session = Depends(Deps.get_db), form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
     """ OAuth2 compatible token login, get an access token for future requests """
-    print("Form:", form_data.username)
     user_found = Database.Crud.user.authenticate(db, username=form_data.username, password=form_data.password)
     if not user_found:
         return ResponseFail(
