@@ -22,8 +22,19 @@ class CRUDBase(Generic[Model, CreateSchema, UpdateSchema]):
     def read_all(self, db: Session, skip: int = 0, limit: int = 5000) -> List[Model]:
         return db.query(self.model).offset(skip).limit(limit).all()
     
-    def update(self):
-        return
+    def update(self, db: Session, *, db_obj: Model, obj_in: Union[UpdateSchema, Dict[str, Any]]) -> Model:
+        obj_data = jsonable_encoder(db_obj)
+        if isinstance(obj_in, dict):
+            update_data = obj_in
+        else:
+            update_data = obj_in.dict(exclude_unset=True)
+
+        for field in obj_data:
+            if field in update_data:
+                setattr(db_obj, field, update_data[field])
+        db.add(db_obj)
+        db.commit()
+        return db_obj
     
     def delete(self):
         return

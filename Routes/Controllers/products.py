@@ -14,9 +14,10 @@ router = APIRouter()
 @router.post("/product")
 def create_product(*, db: Session = Depends(Deps.get_db), product_in: List[Schema.ProductCreate]) -> Any:
     """ Create new Product """
+    print("List: ", product_in);
     result = Database.Crud.product.create(db, product_in);
     return ResponseSuccess(
-        message = result,
+        message = "Products [ " + (", ".join(prod.productName for prod in product_in)) + " ] were added succesfully!",
         status_code = status.HTTP_200_OK,
     )
 
@@ -57,10 +58,17 @@ def read_products(*, db: Session = Depends(Deps.get_db)):
     return products_found
 
 
-@router.put("/product/{key}", response_model = List[Schema.Product])
-def read_products(*, db: Session = Depends(Deps.get_db), key: Any):
-    products_found = Database.Crud.product.update();
-    return products_found
+@router.put("/product/{key}", response_model = Schema.Product)
+def update_products(*, db: Session = Depends(Deps.get_db), key: Any, product_in: Product) -> Product:
+    old_product = Database.Crud.product.read_by_barcode(db=db, key=key)
+    if not old_product:
+        return ResponseFail(
+            message = "Product [{}] does not exist!".format(key),
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
+    
+    products_updated = Database.Crud.product.update(db=db, db_obj=old_product, obj_in=product_in);
+    return products_updated
 
 
 @router.delete("/product/{key}", response_model = List[Schema.Product])
