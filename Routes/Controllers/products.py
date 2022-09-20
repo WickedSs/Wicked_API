@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 import Database.Crud, Schema, Models
 import Models, Schema, random
 from Routes import Deps
-from Schema.Product_Schema import Product
+from Schema.Product_Schema import Product, ProductUpdate
 from Routes.Response_models import *
 
 router = APIRouter()
@@ -52,26 +52,46 @@ def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
     return product_found
 
 
+@router.get("/product_link/{key}", response_model = List[Schema.Product])
+def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
+    product_found = Database.Crud.product.read_by_link(db=db, link=key);
+    if not product_found:
+        raise HTTPException(status_code=400, detail="No product exist with name or barcode {}!".format(key))
+    return product_found
+
+
 @router.get("/product", response_model = List[Schema.Product])
 def read_products(*, db: Session = Depends(Deps.get_db)):
     products_found = Database.Crud.product.read_all(db=db, skip=0, limit=50);
     return products_found
 
 
-@router.put("/product/{key}", response_model = Schema.Product)
-def update_products(*, db: Session = Depends(Deps.get_db), key: Any, product_in: Product) -> Product:
-    old_product = Database.Crud.product.read_by_barcode(db=db, key=key)
+@router.put("/product/{key}")
+def update_products(*, db: Session = Depends(Deps.get_db), key: Any, product_in: ProductUpdate) -> Any:
+    old_product = Database.Crud.product.read_by_id(db=db, id=key)
+    print("ObjectIn: ", product_in.productName, "OldObject: ", old_product.productName)
     if not old_product:
         return ResponseFail(
-            message = "Product [{}] does not exist!".format(key),
-            status_code=status.HTTP_400_BAD_REQUEST
+            message = "Product [ {} ] does not exist!".format(key),
+            status_code = status.HTTP_400_BAD_REQUEST
         )
     
-    products_updated = Database.Crud.product.update(db=db, db_obj=old_product, obj_in=product_in);
-    return products_updated
+    newProduct = Database.Crud.product.update(db=db, db_obj=old_product, obj_in=product_in);
+    return ResponseSuccess(
+        message = "Product [ {} -> {} ] was updated successfully!".format(old_product.identifier, newProduct.identifier),
+        status_code=status.HTTP_200_OK
+    )
 
-
-@router.delete("/product/{key}", response_model = List[Schema.Product])
-def read_products(*, db: Session = Depends(Deps.get_db), key: Any):
-    products_found = Database.Crud.product.delete();
-    return products_found
+@router.delete("/product/{key}", response_model = Schema.Product)
+def delete_product(*, db: Session = Depends(Deps.get_db), key: Any):
+    products_found = Database.Crud.product.read_by_key(db=db, key=key);
+    if not products_found:
+        return ResponseFail(
+            message = "Product [ {} ] does not exist!".format(key),
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
+    Database.Crud.product.delete(db=db, id=products_found.id)
+    return ResponseSuccess(
+        message = "Product [ {} ] was deleted successfully!".format(products_found.productName),
+        status_code=status.HTTP_200_OK
+    )

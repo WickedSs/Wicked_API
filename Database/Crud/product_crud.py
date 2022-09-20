@@ -22,6 +22,9 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, ProductUpdate]):
     def read_by_key(self, db: Session, key : Any) -> List[Product]:
         return db.query(self.model).where((self.model.productName.startswith(str(key))) | (self.model.barcode == str(key))).all()
     
+    def read_by_link(self, db: Session, link : Any) -> List[Product]:
+        return db.query(self.model).filter(self.model.link == link).all()
+    
     def create(self, db: Session, product_in: List[ProductCreate]) -> str:
         for product in product_in:
             new_db_product = Product(
