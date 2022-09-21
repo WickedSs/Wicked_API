@@ -1,4 +1,3 @@
-from cgitb import reset
 from typing import Any, List
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 from sqlalchemy.orm import Session
@@ -8,13 +7,13 @@ from Routes import Deps
 from Schema.Product_Schema import Product, ProductUpdate
 from Routes.Response_models import *
 
+
+
 router = APIRouter()
 
-
 @router.post("/product")
-def create_product(*, db: Session = Depends(Deps.get_db), product_in: List[Schema.ProductCreate]) -> Any:
+def create_product(*, db: Session = Depends(Deps.get_db), product_in: List[Schema.ProductCreate]) -> ResponseSuccess:
     """ Create new Product """
-    print("List: ", product_in);
     result = Database.Crud.product.create(db, product_in);
     return ResponseSuccess(
         message = "Products [ " + (", ".join(prod.productName for prod in product_in)) + " ] were added succesfully!",
@@ -45,7 +44,7 @@ def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
     return product_found
 
 @router.get("/product_key/{key}", response_model = List[Schema.Product])
-def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
+def read_products(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
     product_found = Database.Crud.product.read_by_key(db=db, key=key);
     if not product_found:
         raise HTTPException(status_code=400, detail="No product exist with name or barcode {}!".format(key))
@@ -61,13 +60,13 @@ def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
 
 
 @router.get("/product", response_model = List[Schema.Product])
-def read_products(*, db: Session = Depends(Deps.get_db)):
+def read_product(*, db: Session = Depends(Deps.get_db)):
     products_found = Database.Crud.product.read_all(db=db, skip=0, limit=50);
     return products_found
 
 
 @router.put("/product/{key}")
-def update_products(*, db: Session = Depends(Deps.get_db), key: Any, product_in: ProductUpdate) -> Any:
+def update_product(*, db: Session = Depends(Deps.get_db), key: Any, product_in: ProductUpdate) -> Any:
     old_product = Database.Crud.product.read_by_id(db=db, id=key)
     print("ObjectIn: ", product_in.productName, "OldObject: ", old_product.productName)
     if not old_product:
