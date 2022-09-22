@@ -10,17 +10,17 @@ class InvoiceBase(BaseModel):
     paid: float
     remaining: float
     identifier: str
-    BC: str
-    BCdate: str
-    BL: str
-    BLdate: str
+    bc: str
+    bcdate: str
+    bl: str
+    bldate: str
     factureNumber: str
     invoiceRegister: str
     validated: int
     validationDate: str
     note: str
-    TVA: str
-    FactureTVA: float
+    tva: str
+    factureTVA: float
     address: str
     
 # Properties to receive on Invoice creation
@@ -41,17 +41,17 @@ class InvoiceInDBBase(InvoiceBase):
     paid: float
     remaining: float
     identifier: str
-    BC: str
-    BCdate: str
-    BL: str
-    BLdate: str
+    bc: str
+    bcdate: str
+    bl: str
+    bldate: str
     factureNumber: str
     invoiceRegister: str
     validated: int
     validationDate: str
     note: str
-    TVA: str
-    FactureTVA: float
+    tva: str
+    factureTVA: float
     address: str
 
     class Config:

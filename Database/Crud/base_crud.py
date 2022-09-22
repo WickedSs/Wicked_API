@@ -21,7 +21,7 @@ class CRUDBase(Generic[Model, CreateSchema, UpdateSchema]):
     
     def read_all(self, db: Session, skip: int = 0, limit: int = 5000) -> List[Model]:
         return db.query(self.model).offset(skip).limit(limit).all()
-    
+        
     def update(self, db: Session, *, db_obj: Model, obj_in: Union[UpdateSchema, Dict[str, Any]]) -> Model:
         obj_data = jsonable_encoder(db_obj)
         if isinstance(obj_in, dict):

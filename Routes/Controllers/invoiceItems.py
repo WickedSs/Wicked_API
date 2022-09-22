@@ -12,7 +12,7 @@ from Routes.Response_models import *
 router = APIRouter()
 
 @router.post("/invoiceItem")
-def create_invoiceItem(*, db: Session = Depends(Deps.get_db), invoiceItem_in: Schema.InvoiceItem) -> ResponseSuccess:
+def create_invoiceItem(*, db: Session = Depends(Deps.get_db), invoiceItem_in: List[Schema.InvoiceItem]) -> ResponseSuccess:
     """ Create new invoiceItem """
     result = Database.Crud.invoiceItem.create(db, invoiceItem_in);
     return ResponseSuccess(

@@ -16,7 +16,7 @@ def create_invoice(*, db: Session = Depends(Deps.get_db), invoice_in: Schema.Inv
     """ Create new invoice """
     result = Database.Crud.invoice.create(db, invoice_in);
     return ResponseSuccess(
-        message = "Invoices [ " + (", ".join(inv.buyer for inv in invoice_in)) + " ] were added succesfully!",
+        message = "Invoices [ {} ] added succesfully!".format(invoice_in.buyer),
         status_code = status.HTTP_200_OK,
     )
 
