@@ -16,7 +16,7 @@ def create_invoiceItem(*, db: Session = Depends(Deps.get_db), invoiceItem_in: Li
     """ Create new invoiceItem """
     result = Database.Crud.invoiceItem.create(db, invoiceItem_in);
     return ResponseSuccess(
-        message = "invoiceItems [ " + (", ".join(inv.buyer for inv in invoiceItem_in)) + " ] were added succesfully!",
+        message = "invoiceItems [ " + (", ".join(inv.productName for inv in invoiceItem_in)) + " ] were added succesfully!",
         status_code = status.HTTP_200_OK,
     )
 
