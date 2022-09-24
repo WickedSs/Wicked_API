@@ -1,5 +1,5 @@
 from typing import Any, List
-from fastapi import APIRouter, Body, Depends, HTTPException, status
+from fastapi import APIRouter, Body, Depends, HTTPException, status, Form
 from sqlalchemy.orm import Session
 import Database.Crud, Schema, Models
 import Models, Schema, random
@@ -28,9 +28,10 @@ def read_invoice(*, db: Session = Depends(Deps.get_db), id: Any) -> Any:
         raise HTTPException(status_code=400, detail="invoice does not exist!")
     return invoice_found
 
+
 @router.get("/invoice_register/{register}", response_model = List[Schema.Invoice])
 def read_invoices(*, db: Session = Depends(Deps.get_db), register: str) -> Any:
-    invoice_found = Database.Crud.invoice.read_by_register(db=db, register=register);
+    invoice_found = Database.Crud.invoice.read_by_register(db=db, register=register.replace("_", " "));
     if not invoice_found:
         raise HTTPException(status_code=400, detail="No invoice exist with register {}!".format(register))
     return invoice_found
@@ -47,6 +48,12 @@ def read_invoice(*, db: Session = Depends(Deps.get_db), date: str) -> Any:
 @router.get("/invoice", response_model = List[Schema.Invoice])
 def read_invoice(*, db: Session = Depends(Deps.get_db)):
     invoices_found = Database.Crud.invoice.read_all(db=db, skip=0, limit=50);
+    return invoices_found
+
+
+@router.get("/invoice_search/", response_model = List[Schema.Invoice])
+def read_invoice(*, db: Session = Depends(Deps.get_db), buyer: str, register: str):
+    invoices_found = Database.Crud.invoice.read_by_buyer_and_register(db=db, buyer=buyer, register=register.replace("_", " "));
     return invoices_found
 
 

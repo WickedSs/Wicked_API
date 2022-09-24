@@ -5,7 +5,7 @@ from Models.Base_Models import Invoice
 from Schema.Invoice_Schema import InvoiceCreate, InvoiceUpdate
 from typing import Type
 from sqlalchemy.orm import Session
-
+from sqlalchemy import and_, or_, not_
 from Schema.Product_Schema import ProductCreate
 
 class CRUDInvoice(CRUDBase[Invoice, InvoiceCreate, InvoiceUpdate]):
@@ -23,6 +23,11 @@ class CRUDInvoice(CRUDBase[Invoice, InvoiceCreate, InvoiceUpdate]):
     
     def read_by_register(self, db: Session, register : str) -> List[Invoice]:
         return db.query(self.model).where(self.model.invoiceRegister == register).all()
+    
+    def read_by_buyer_and_register(self, db: Session, buyer: str, register : str) -> List[Invoice]:
+        return db.query(self.model).where(
+            and_(self.model.invoiceRegister == register,
+                 self.model.buyer.contains(buyer))).all()
     
     def create(self, db: Session, invoice_in: InvoiceCreate):
         new_db_invoice = Invoice(

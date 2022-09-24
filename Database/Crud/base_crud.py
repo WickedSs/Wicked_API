@@ -36,9 +36,9 @@ class CRUDBase(Generic[Model, CreateSchema, UpdateSchema]):
         db.commit()
         return db_obj
     
-    def delete(self, db: Session, id: int) -> Model:
+    def delete(self, db: Session, id: int) -> str:
         obj = db.query(self.model).get(id)
         db.delete(obj)
         db.commit()
-        return 
+        return "Item {} was deleted successfuly!".format(obj.id)
     
