@@ -51,11 +51,19 @@ def read_products(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
     return product_found
 
 
-@router.get("/product_link/{key}", response_model = List[Schema.Product])
-def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
-    product_found = Database.Crud.product.read_by_link(db=db, link=key);
+@router.get("/product_quantity/{quantity}", response_model = List[Schema.Product])
+def read_products(*, db: Session = Depends(Deps.get_db), quantity: int) -> Any:
+    product_found = Database.Crud.product.read_by_quantity(db=db, quantity=quantity);
     if not product_found:
-        raise HTTPException(status_code=400, detail="No product exist with name or barcode {}!".format(key))
+        raise HTTPException(status_code=400, detail="No product exist with with a quantity less or equal to {}!".format(quantity))
+    return product_found
+
+
+@router.get("/product_link/{link}", response_model = List[Schema.Product])
+def read_product(*, db: Session = Depends(Deps.get_db), link: str) -> Any:
+    product_found = Database.Crud.product.read_by_link(db=db, link=link);
+    if not product_found:
+        raise HTTPException(status_code=400, detail="No product exist with name or barcode {}!".format(link))
     return product_found
 
 

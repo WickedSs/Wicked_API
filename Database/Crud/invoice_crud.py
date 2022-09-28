@@ -15,6 +15,9 @@ class CRUDInvoice(CRUDBase[Invoice, InvoiceCreate, InvoiceUpdate]):
     def read_by_buyer(self, db: Session, buyer : str) -> List[Invoice]:
         return db.query(self.model).where(self.model.buyer.startswith(buyer)).all()
     
+    def read_by_exact_date(self, db: Session, date : str) -> List[Invoice]:
+        return db.query(self.model).where(self.model.opDate == date).all()
+    
     def read_by_date(self, db: Session, date : str) -> List[Invoice]:
         return db.query(self.model).where(self.model.opDate.contains(date)).all()
     
@@ -23,6 +26,9 @@ class CRUDInvoice(CRUDBase[Invoice, InvoiceCreate, InvoiceUpdate]):
     
     def read_by_register(self, db: Session, register : str) -> List[Invoice]:
         return db.query(self.model).where(self.model.invoiceRegister == register).all()
+    
+    def read_by_identifier(self, db: Session, identifier : str) -> Invoice:
+        return db.query(self.model).where(self.model.identifier == identifier).first()
     
     def read_by_buyer_and_register(self, db: Session, buyer: str, register : str) -> List[Invoice]:
         return db.query(self.model).where(
@@ -53,6 +59,12 @@ class CRUDInvoice(CRUDBase[Invoice, InvoiceCreate, InvoiceUpdate]):
         db.add(new_db_invoice)
         db.commit()
         return {"Success" : "Invoice Added!"}
+    
+    def delete_by_identifier(self, db: Session, identifier : str) -> List[Invoice]:
+        obj = db.query(self.model).filter(self.model.identifier == identifier).all()
+        db.delete(obj)
+        db.commit()
+        return obj
         
         
 invoice = CRUDInvoice(Invoice)

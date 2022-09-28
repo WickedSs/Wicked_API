@@ -34,6 +34,14 @@ def read_material(*, db: Session = Depends(Deps.get_db)):
     return materials_found
 
 
+@router.get("/material_link/{link}", response_model = List[Schema.Material])
+def read_product(*, db: Session = Depends(Deps.get_db), link: str) -> Any:
+    materials_found = Database.Crud.material.read_by_link(db=db, materialLink=link);
+    if not materials_found:
+        raise HTTPException(status_code=400, detail="No materials exist with link {}!".format(link))
+    return materials_found
+
+
 @router.put("/material/{id}")
 def update_material(*, db: Session = Depends(Deps.get_db), id: int, material_in: MaterialUpdate) -> Any:
     old_material = Database.Crud.material.read_by_id(db=db, id=id)

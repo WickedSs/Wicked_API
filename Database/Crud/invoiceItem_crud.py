@@ -16,8 +16,8 @@ class CRUDInvoiceItem(CRUDBase[InvoiceItem, InvoiceItemCreate, InvoiceItemUpdate
     def read_by_identifier(self, db: Session, identifier : str) -> List[InvoiceItem]:
         return db.query(self.model).where(self.model.identifier == identifier).all()
     
-    def delete_by_link(self, db: Session, link : str) -> List[InvoiceItem]:
-        objs = db.query(self.model).filter(self.model.link == link).all()
+    def delete_by_identifier(self, db: Session, identifier : str) -> List[InvoiceItem]:
+        objs = db.query(self.model).filter(self.model.identifier == identifier).all()
         for obj in objs:
             db.delete(obj)
         db.commit()

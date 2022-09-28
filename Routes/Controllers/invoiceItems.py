@@ -15,6 +15,10 @@ router = APIRouter()
 def create_invoiceItem(*, db: Session = Depends(Deps.get_db), invoiceItem_in: List[Schema.InvoiceItem]) -> ResponseSuccess:
     """ Create new invoiceItem """
     result = Database.Crud.invoiceItem.create(db, invoiceItem_in);
+    for item in invoiceItem_in:
+        new_product = Database.Crud.product.read_by_barcode(db=db, barcode=item.respectiveBarcode)
+        new_product.quantity -= item.quantity
+        db.commit()
     return ResponseSuccess(
         message = "invoiceItems [ " + (", ".join(inv.productName for inv in invoiceItem_in)) + " ] were added succesfully!",
         status_code = status.HTTP_200_OK,
@@ -56,9 +60,9 @@ def update_invoiceItem(*, db: Session = Depends(Deps.get_db), id: int, invoiceIt
         status_code=status.HTTP_200_OK
     )
 
-@router.delete("/invoiceItem/{id}", response_model = Schema.InvoiceItem)
+@router.delete("/invoiceItem/{id}")
 def delete_invoiceItem(*, db: Session = Depends(Deps.get_db), id: int):
-    invoiceItems_found = Database.Crud.invoiceItem.delete_by_id(db=db, id=id);
+    invoiceItems_found = Database.Crud.invoiceItem.read_by_id(db=db, id=id);
     if not invoiceItems_found:
         return ResponseFail(
             message = "invoiceItem [ {} ] does not exist!".format(id),
@@ -71,15 +75,15 @@ def delete_invoiceItem(*, db: Session = Depends(Deps.get_db), id: int):
     )
     
     
-@router.delete("/invoiceItem/{link}", response_model = Schema.InvoiceItem)
-def delete_invoiceItem(*, db: Session = Depends(Deps.get_db), link: str):
-    invoiceItems_found = Database.Crud.invoiceItem.delete_by_link(db=db, link=link);
+@router.delete("/invoiceItem/{identifier}")
+def delete_invoiceItem(*, db: Session = Depends(Deps.get_db), identifier: str):
+    invoiceItems_found = Database.Crud.invoiceItem.read_by_identifier(db=db, identifier=identifier);
     if not invoiceItems_found:
         return ResponseFail(
             message = "invoiceItems do not exist!",
             status_code=status.HTTP_400_BAD_REQUEST
         )
-    Database.Crud.invoiceItem.delete(db=db, id=invoiceItems_found.id)
+    Database.Crud.invoiceItem.delete_by_link(db=db, id=invoiceItems_found.id)
     return ResponseSuccess(
         message = "invoiceItems were deleted successfully!",
         status_code=status.HTTP_200_OK

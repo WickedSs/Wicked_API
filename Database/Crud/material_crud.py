@@ -12,6 +12,9 @@ class CRUDMaterial(CRUDBase[Material, MaterialCreate, MaterialUpdate]):
     
     def read_by_key(self, db: Session, key : str) -> List[Material]:
         return db.query(self.model).filter(self.model.materialKey == key).all()
+    
+    def read_by_link(self, db: Session, materialLink : str) -> List[Material]:
+        return db.query(self.model).filter(self.model.materialLink == materialLink).all()
         
         
 material = CRUDMaterial(Material)

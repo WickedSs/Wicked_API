@@ -37,6 +37,14 @@ def read_invoices(*, db: Session = Depends(Deps.get_db), register: str) -> Any:
     return invoice_found
 
 
+@router.get("/invoice_exact_date/{date}", response_model = List[Schema.Invoice])
+def read_invoice(*, db: Session = Depends(Deps.get_db), date: str) -> Any:
+    invoice_found = Database.Crud.invoice.read_by_exact_date(db=db, date=date);
+    if not invoice_found:
+        raise HTTPException(status_code=400, detail="No invoice exist with operation date {}!".format(date))
+    return invoice_found
+
+
 @router.get("/invoice_date/{date}", response_model = List[Schema.Invoice])
 def read_invoice(*, db: Session = Depends(Deps.get_db), date: str) -> Any:
     invoice_found = Database.Crud.invoice.read_by_date(db=db, date=date);
@@ -72,7 +80,7 @@ def update_invoice(*, db: Session = Depends(Deps.get_db), id: int, invoice_in: I
         status_code=status.HTTP_200_OK
     )
 
-@router.delete("/invoice/{id}", response_model = Schema.Invoice)
+@router.delete("/invoice/{id}")
 def delete_invoice(*, db: Session = Depends(Deps.get_db), id: int):
     invoices_found = Database.Crud.invoice.read_by_id(db=db, id=id);
     if not invoices_found:
@@ -80,6 +88,31 @@ def delete_invoice(*, db: Session = Depends(Deps.get_db), id: int):
             message = "invoice [ {} ] does not exist!".format(id),
             status_code=status.HTTP_400_BAD_REQUEST
         )
+    items = Database.Crud.invoiceItem.read_by_identifier(db=db, identifier=invoices_found.identifier)
+    for item in items:
+        old_product = Database.Crud.product.read_by_barcode(db=db, barcode=item.respectiveBarcode)
+        old_product.quantity += item.quantity
+        db.commit()
+    Database.Crud.invoice.delete(db=db, id=invoices_found.id)
+    return ResponseSuccess(
+        message = "invoice [ {} ] was deleted successfully!".format(invoices_found.id),
+        status_code=status.HTTP_200_OK
+    )
+    
+@router.delete("/invoice_identifier/{identifier}")
+def delete_invoice(*, db: Session = Depends(Deps.get_db), identifier: str):
+    invoices_found = Database.Crud.invoice.read_by_identifier(db=db, identifier=identifier);
+    print(invoices_found)
+    if not invoices_found:
+        return ResponseFail(
+            message = "invoice [ {} ] does not exist!".format(id),
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
+    items = Database.Crud.invoiceItem.read_by_identifier(db=db, identifier=identifier)
+    for item in items:
+        old_product = Database.Crud.product.read_by_barcode(db=db, barcode=item.respectiveBarcode)
+        old_product.quantity += item.quantity
+        db.commit()
     Database.Crud.invoice.delete(db=db, id=invoices_found.id)
     return ResponseSuccess(
         message = "invoice [ {} ] was deleted successfully!".format(invoices_found.id),

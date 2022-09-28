@@ -25,6 +25,9 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, ProductUpdate]):
     def read_by_link(self, db: Session, link : Any) -> List[Product]:
         return db.query(self.model).filter(self.model.link == link).all()
     
+    def read_by_quantity(self, db: Session, quantity: int) -> List[Product]:
+        return db.query(self.model).filter(self.model.quantity <= quantity).all()
+    
     def create(self, db: Session, product_in: List[ProductCreate]) -> str:
         for product in product_in:
             new_db_product = Product(
