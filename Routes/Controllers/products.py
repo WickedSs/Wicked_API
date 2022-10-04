@@ -7,9 +7,29 @@ from Routes import Deps
 from Schema.Product_Schema import Product, ProductUpdate
 from Routes.Response_models import *
 
-
-
 router = APIRouter()
+
+default_product = Product(
+    id=10000,
+    productName = "Default Product",
+    model = "Model",
+    barcode = "0000000",
+    quantity = 999,
+    imagePath = "default.png",
+    price = 1000.00,
+    identifier = "abcdefjh",
+    sold = 0,
+    bought = 500.00,
+    market = 950.00,
+    earned = 0,
+    description = "Default Product to send on first request!",
+    link = "AAAAAAAA",
+    reference = "BBBBBBBB",
+    availableColors = "Black",
+    materialLink = "CCCCCCCCCC",
+    dimensions = "",
+    isActive = False
+)
 
 @router.post("/product")
 def create_product(*, db: Session = Depends(Deps.get_db), product_in: List[Schema.ProductCreate]) -> ResponseSuccess:
@@ -44,7 +64,7 @@ def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
     return product_found
 
 @router.get("/product_key/{key}", response_model = List[Schema.Product])
-def read_products(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
+def read_product(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
     product_found = Database.Crud.product.read_by_key(db=db, key=key);
     if not product_found:
         raise HTTPException(status_code=400, detail="No product exist with name or barcode {}!".format(key))
@@ -52,7 +72,7 @@ def read_products(*, db: Session = Depends(Deps.get_db), key: Any) -> Any:
 
 
 @router.get("/product_quantity/{quantity}", response_model = List[Schema.Product])
-def read_products(*, db: Session = Depends(Deps.get_db), quantity: int) -> Any:
+def read_product(*, db: Session = Depends(Deps.get_db), quantity: int) -> Any:
     product_found = Database.Crud.product.read_by_quantity(db=db, quantity=quantity);
     if not product_found:
         raise HTTPException(status_code=400, detail="No product exist with with a quantity less or equal to {}!".format(quantity))
@@ -64,6 +84,19 @@ def read_product(*, db: Session = Depends(Deps.get_db), link: str) -> Any:
     product_found = Database.Crud.product.read_by_link(db=db, link=link);
     if not product_found:
         raise HTTPException(status_code=400, detail="No product exist with name or barcode {}!".format(link))
+    return product_found
+
+
+@router.get("/product_default", response_model = Schema.Product)
+def read_product(*, db: Session = Depends(Deps.get_db)) -> Any:
+    return default_product
+
+
+@router.get("/product_sold", response_model = List[Schema.Product])
+def read_product(*, db: Session = Depends(Deps.get_db)) -> Any:
+    product_found = Database.Crud.product.read_by_sold(db=db);
+    if not product_found:
+        raise HTTPException(status_code=400, detail="No products exist!")
     return product_found
 
 

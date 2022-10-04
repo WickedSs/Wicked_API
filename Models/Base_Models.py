@@ -47,7 +47,7 @@ class Product(Base):
     reference = Column(String, index=True, nullable=True, default="")
     availableColors = Column(String, index=True)
     materialLink = Column(String, index=True)
-
+    isActive = Column(Boolean, index=True)
 
 class Case(Base):
     __tablename__ = "cases"

@@ -1,9 +1,8 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, Type
 from Routes.Security import get_password_hash, verify_password
 from Database.Crud.base_crud import CRUDBase
 from Models.Base_Models import User
 from Schema.User_Schema import UserCreate, UserUpdate
-from typing import Type
 from sqlalchemy.orm import Session
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -30,6 +29,9 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     
     def get_username(self, user_found: User) -> bool:
         return user.username;
+
+    def create(self):
+        return
         
         
 user = CRUDUser(User)

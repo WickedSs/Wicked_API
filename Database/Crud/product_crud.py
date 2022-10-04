@@ -27,6 +27,9 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, ProductUpdate]):
     
     def read_by_quantity(self, db: Session, quantity: int) -> List[Product]:
         return db.query(self.model).filter(self.model.quantity <= quantity).all()
+
+    def read_by_sold(self, db: Session) -> List[Product]:
+        return db.query(self.model).order_by(self.model.sold.desc()).limit(5).all()
     
     def create(self, db: Session, product_in: List[ProductCreate]) -> str:
         for product in product_in:
