@@ -9,28 +9,6 @@ from Routes.Response_models import *
 
 router = APIRouter()
 
-default_product = Product(
-    id=10000,
-    productName = "Default Product",
-    model = "Model",
-    barcode = "0000000",
-    quantity = 999,
-    imagePath = "default.png",
-    price = 1000.00,
-    identifier = "abcdefjh",
-    sold = 0,
-    bought = 500.00,
-    market = 950.00,
-    earned = 0,
-    description = "Default Product to send on first request!",
-    link = "AAAAAAAA",
-    reference = "BBBBBBBB",
-    availableColors = "Black",
-    materialLink = "CCCCCCCCCC",
-    dimensions = "",
-    isActive = False
-)
-
 @router.post("/product")
 def create_product(*, db: Session = Depends(Deps.get_db), product_in: List[Schema.ProductCreate]) -> ResponseSuccess:
     """ Create new Product """
@@ -89,7 +67,10 @@ def read_product(*, db: Session = Depends(Deps.get_db), link: str) -> Any:
 
 @router.get("/product_default", response_model = Schema.Product)
 def read_product(*, db: Session = Depends(Deps.get_db)) -> Any:
-    return default_product
+    product_found = Database.Crud.product.read_by_barcode(db=db, barcode="0000001");
+    if not product_found:
+        raise HTTPException(status_code=400, detail="Product does not exist!")
+    return product_found
 
 
 @router.get("/product_sold", response_model = List[Schema.Product])

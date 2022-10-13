@@ -10,14 +10,11 @@ class CRUDInvoiceItem(CRUDBase[InvoiceItem, InvoiceItemCreate, InvoiceItemUpdate
     def __init__(self, model: Type[InvoiceItem]):    
         super().__init__(model)
     
-    def read_by_buyer(self, db: Session, buyer : str) -> List[InvoiceItem]:
-        return db.query(self.model).where(self.model.buyer.startswith(buyer)).all()
-    
     def read_by_identifier(self, db: Session, identifier : str) -> List[InvoiceItem]:
-        return db.query(self.model).where(self.model.identifier == identifier).all()
+        return db.query(self.model).where(self.model.item_identifier == identifier).all()
     
     def delete_by_identifier(self, db: Session, identifier : str) -> List[InvoiceItem]:
-        objs = db.query(self.model).filter(self.model.identifier == identifier).all()
+        objs = db.query(self.model).filter(self.model.item_identifier == identifier).all()
         for obj in objs:
             db.delete(obj)
         db.commit()
@@ -26,17 +23,16 @@ class CRUDInvoiceItem(CRUDBase[InvoiceItem, InvoiceItemCreate, InvoiceItemUpdate
     def create(self, db: Session, invoiceItems_in: List[InvoiceItemCreate]):
         for invoiceItem in invoiceItems_in:
             new_db_InvoiceItem = InvoiceItem(
-                productName = invoiceItem.productName,
-                imagePath = invoiceItem.imagePath,
-                price = invoiceItem.price,
-                quantity = invoiceItem.quantity,
-                total = invoiceItem.total,
-                identifier = invoiceItem.identifier,
-                respectiveBarcode = invoiceItem.respectiveBarcode,
-                isManual = invoiceItem.isManual,
+                item_name = invoiceItem.item_name,
+                item_image = invoiceItem.item_image,
+                item_price = invoiceItem.item_price,
+                item_quantity = invoiceItem.item_quantity,
+                item_identifier = invoiceItem.item_identifier,
+                item_barcode = invoiceItem.item_barcode,
+                is_manual = invoiceItem.is_manual,
                 reference = invoiceItem.reference,
-                color = invoiceItem.color,
-                model = invoiceItem.model
+                item_size = invoiceItem.item_size,
+                item_model = invoiceItem.item_model
             )
             db.add(new_db_InvoiceItem)
             db.commit()

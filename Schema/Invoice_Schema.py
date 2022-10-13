@@ -4,24 +4,26 @@ from pydantic import BaseModel
 
 # Shared properties
 class InvoiceBase(BaseModel):
-    buyer: str
-    opDate: str
-    amount: float
-    paid: float
-    remaining: float
-    identifier: str
-    bc: str
-    bcdate: str
-    bl: str
-    bldate: str
-    factureNumber: str
-    invoiceRegister: str
-    validated: int
-    validationDate: str
-    note: str
-    tva: str
-    factureTVA: float
-    address: str
+    buyer_name : str
+    buyer_address : str
+    operation_date : str
+    invoice_total : float
+    amount_paid : float
+    amount_remaining : float
+    invoice_identifier : str
+    purchase_order : str
+    purchase_order_date : str
+    purchase_form : str
+    purchase_form_date : str
+    invoice_number : str
+    trade_registry : str
+    is_validated : bool
+    validation_deadline : str
+    invoice_note : str
+    invoice_tax : str
+    invoice_tax_price : float
+    is_delivered : bool
+    invoice_discount : int
     
 # Properties to receive on Invoice creation
 class InvoiceCreate(InvoiceBase):
@@ -34,25 +36,27 @@ class InvoiceUpdate(InvoiceBase):
 
 # Properties shared by models stored in DB
 class InvoiceInDBBase(InvoiceBase):
-    id: int
-    buyer: str
-    opDate: str
-    amount: float
-    paid: float
-    remaining: float
-    identifier: str
-    bc: str
-    bcdate: str
-    bl: str
-    bldate: str
-    factureNumber: str
-    invoiceRegister: str
-    validated: int
-    validationDate: str
-    note: str
-    tva: str
-    factureTVA: float
-    address: str
+    # id: int
+    buyer_name : str
+    buyer_address : str
+    operation_date : str
+    invoice_total : float
+    amount_paid : float
+    amount_remaining : float
+    invoice_identifier : str
+    purchase_order : str
+    purchase_order_date : str
+    purchase_form : str
+    purchase_form_date : str
+    invoice_number : str
+    trade_registry : str
+    is_validated : bool
+    validation_deadline : str
+    invoice_note : str
+    invoice_tax : str
+    invoice_tax_price : float
+    is_delivered : bool
+    invoice_discount : int
 
     class Config:
         orm_mode = True
@@ -63,4 +67,5 @@ class Invoice(InvoiceInDBBase):
 
 # Properties properties stored in DB
 class InvoiceInDB(InvoiceInDBBase):
+    id: int
     pass

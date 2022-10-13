@@ -1,3 +1,4 @@
+from copyreg import constructor
 from typing import Any, List
 from fastapi import APIRouter, Body, Depends, HTTPException, status, Form
 from sqlalchemy.orm import Session
@@ -16,7 +17,7 @@ def create_invoice(*, db: Session = Depends(Deps.get_db), invoice_in: Schema.Inv
     """ Create new invoice """
     result = Database.Crud.invoice.create(db, invoice_in);
     return ResponseSuccess(
-        message = "Invoices [ {} ] added succesfully!".format(invoice_in.buyer),
+        message = "Invoices [ {} ] added succesfully!".format(invoice_in.buyer_name),
         status_code = status.HTTP_200_OK,
     )
 
@@ -29,11 +30,11 @@ def read_invoice(*, db: Session = Depends(Deps.get_db), id: Any) -> Any:
     return invoice_found
 
 
-@router.get("/invoice_register/{register}", response_model = List[Schema.Invoice])
-def read_invoices(*, db: Session = Depends(Deps.get_db), register: str) -> Any:
-    invoice_found = Database.Crud.invoice.read_by_register(db=db, register=register.replace("_", " "));
+@router.get("/invoice_registry/{registry}", response_model = List[Schema.InvoiceInDB])
+def read_invoices(*, db: Session = Depends(Deps.get_db), registry: str) -> Any:
+    invoice_found = Database.Crud.invoice.read_by_register(db=db, registry=registry.replace("_", " "));
     if not invoice_found:
-        raise HTTPException(status_code=400, detail="No invoice exist with register {}!".format(register))
+        raise HTTPException(status_code=400, detail="No invoice exist with register {}!".format(registry))
     return invoice_found
 
 

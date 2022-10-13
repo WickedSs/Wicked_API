@@ -4,17 +4,16 @@ from pydantic import BaseModel
 
 # Shared properties
 class InvoiceItemBase(BaseModel):
-    productName: str
-    imagePath: str
-    price: float
-    quantity: int
-    total: float
-    identifier: str
-    respectiveBarcode: str
-    isManual: int
+    item_name: str
+    item_image: str
+    item_price: float
+    item_quantity: int
+    item_identifier: str
+    item_barcode: str
+    is_manual: int
     reference: str
-    color: str
-    model: str
+    item_size: str
+    item_model: str
     
 # Properties to receive on InvoiceItem creation
 class InvoiceItemCreate(InvoiceItemBase):
@@ -27,18 +26,17 @@ class InvoiceItemUpdate(InvoiceItemBase):
 
 # Properties shared by models stored in DB
 class InvoiceItemInDBBase(InvoiceItemBase):
-    id: int
-    productName: str
-    imagePath: str
-    price: float
-    quantity: int
-    total: float
-    identifier: str
-    respectiveBarcode: str
-    isManual: int
+    # id: int
+    item_name: str
+    item_image: str
+    item_price: float
+    item_quantity: int
+    item_identifier: str
+    item_barcode: str
+    is_manual: int
     reference: str
-    color: str
-    model: str
+    item_size: str
+    item_model: str
 
     class Config:
         orm_mode = True
@@ -49,4 +47,5 @@ class InvoiceItem(InvoiceItemInDBBase):
 
 # Properties properties stored in DB
 class InvoiceItemInDB(InvoiceItemInDBBase):
+    id: int
     pass

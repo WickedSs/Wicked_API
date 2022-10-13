@@ -4,23 +4,25 @@ from pydantic import BaseModel
 
 # Shared properties
 class ProductBase(BaseModel):
-    productName: str
+    product_name: str
     model: str
     barcode: str
     quantity: int
     imagePath: str = "default.png"
     price: float
     identifier: str
-    dimensions: str
     sold: int
     bought: float
     market: float
     earned: float
     description: str
-    link: str
+    product_link: str
     reference: str
-    availableColors: str
-    materialLink: str
+    colors: str
+    sizes: str
+    material_link: str
+    is_saved: str
+    is_active: bool
     
 # Properties to receive on Product creation
 class ProductCreate(ProductBase):
@@ -34,7 +36,7 @@ class ProductUpdate(ProductBase):
 # Properties shared by models stored in DB
 class ProductInDBBase(ProductBase):
     id: int
-    productName: str
+    product_name: str
     model: str
     barcode: str
     quantity: int
@@ -46,10 +48,13 @@ class ProductInDBBase(ProductBase):
     market: float
     earned: float
     description: str
-    link: str
+    product_link: str
     reference: str
-    availableColors: str
-    materialLink: str
+    colors: str
+    sizes: str
+    material_link: str
+    is_saved: str
+    is_active: bool
 
     class Config:
         orm_mode = True
