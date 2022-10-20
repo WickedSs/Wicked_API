@@ -26,7 +26,7 @@ class InvoiceItemUpdate(InvoiceItemBase):
 
 # Properties shared by models stored in DB
 class InvoiceItemInDBBase(InvoiceItemBase):
-    # id: int
+    id: int
     item_name: str
     item_image: str
     item_price: float

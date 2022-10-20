@@ -36,7 +36,7 @@ class InvoiceUpdate(InvoiceBase):
 
 # Properties shared by models stored in DB
 class InvoiceInDBBase(InvoiceBase):
-    # id: int
+    id: int
     buyer_name : str
     buyer_address : str
     operation_date : str

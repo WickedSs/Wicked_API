@@ -16,9 +16,10 @@ def create_invoiceItem(*, db: Session = Depends(Deps.get_db), invoiceItem_in: Li
     print(invoiceItem_in);
     result = Database.Crud.invoiceItem.create(db, invoiceItem_in);
     for item in invoiceItem_in:
-        new_product = Database.Crud.product.read_by_barcode(db=db, barcode=item.item_barcode)
-        new_product.quantity -= item.item_quantity
-        db.commit()
+        if not item.is_manual:
+            new_product = Database.Crud.product.read_by_barcode(db=db, barcode=item.item_barcode)
+            new_product.quantity -= item.item_quantity
+            db.commit()
     return ResponseSuccess(
         message = "invoiceItems [ " + (", ".join(inv.item_name for inv in invoiceItem_in)) + " ] were added succesfully!",
         status_code = status.HTTP_200_OK,
@@ -39,7 +40,7 @@ def read_invoiceItem(*, db: Session = Depends(Deps.get_db)):
     return invoiceItems_found
 
 
-@router.get("/invoiceItem_identifier/{identifier}", response_model = List[Schema.InvoiceItemInDB])
+@router.get("/invoiceItem_identifier/{identifier}", response_model = List[Schema.InvoiceItem])
 def read_invoiceItem(*, db: Session = Depends(Deps.get_db), identifier: str):
     invoiceItems_found = Database.Crud.invoiceItem.read_by_identifier(db=db, identifier=identifier);
     if not invoiceItems_found:

@@ -30,7 +30,7 @@ def read_invoice(*, db: Session = Depends(Deps.get_db), id: Any) -> Any:
     return invoice_found
 
 
-@router.get("/invoice_registry/{registry}", response_model = List[Schema.InvoiceInDB])
+@router.get("/invoice_registry/{registry}", response_model = List[Schema.Invoice])
 def read_invoices(*, db: Session = Depends(Deps.get_db), registry: str) -> Any:
     invoice_found = Database.Crud.invoice.read_by_register(db=db, registry=registry.replace("_", " "));
     if not invoice_found:
