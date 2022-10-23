@@ -5,6 +5,7 @@ from pydantic import BaseModel
 # Shared properties
 class ProductBase(BaseModel):
     product_name: str
+    category: str
     model: str
     barcode: str
     quantity: int
@@ -37,6 +38,7 @@ class ProductUpdate(ProductBase):
 class ProductInDBBase(ProductBase):
     id: int
     product_name: str
+    category: str
     model: str
     barcode: str
     quantity: int

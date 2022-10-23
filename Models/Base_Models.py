@@ -1,4 +1,5 @@
 from operator import index
+from unicodedata import category
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, Numeric
 from sqlalchemy.orm import relationship
 from Database.Base import Base
@@ -31,6 +32,7 @@ class Product(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     product_name = Column(String, index=True)
+    category = Column(String, index=True)
     model = Column(String, index=True)
     barcode = Column(String, index=True)
     quantity = Column(Integer)
