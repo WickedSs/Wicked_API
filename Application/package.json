@@ -1,0 +1,28 @@
+{
+  "name": "upgrade_web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3100",
+    "build": "next build",
+    "start": "next start -p 3100",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "axios": "^1.1.2",
+    "cookies-next": "^2.1.1",
+    "cors": "^2.8.5",
+    "jspdf": "^2.5.1",
+    "next": "^13.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.36.1"
+  },
+  "devDependencies": {
+    "eslint": "8.24.0",
+    "eslint-config-next": "^13.1.1"
+  }
+}

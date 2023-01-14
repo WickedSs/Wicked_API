@@ -1,0 +1,370 @@
+
+
+.selling_scene {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 100vw;
+    height: 96vh;
+    font-family: Rubik-Regular;
+    
+}
+
+.selling_left_side {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 70%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.selling_right_side {
+    display: flex;
+    flex-direction: column;
+    width: 27%;
+    /* padding: 1em; */
+    /* border-radius: 1rem; */
+    /* overflow: hidden; */
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.selling_left_side .top_area, 
+.selling_left_side .bottom_area, 
+.selling_left_side .sub_bottom_area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.bottom_area { margin-bottom: 1em; }
+
+.vbox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.buyer_paid_deadline {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buyer_paid_deadline div {
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+}
+
+.selling_right_side .vbox button {
+    padding: 11px 15px;
+    font-size: 1.1rem;
+    font-family: Rubik-Regular;
+    background-color: transparent;
+    border: 1px solid #4a4d56;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.selling_right_side .vbox button:hover {
+    background-color: #45464F;
+}
+
+.vbox label { color: #a7a8b5; }
+.vbox input { background-color: #252632; border: 1px dashed #4a4d56; }
+.vbox input::placeholder  { color: #5f6168; }
+.vbox input:disabled { color: #fff }
+
+.selling_left_side .top_area .vbox:nth-child(1) { width: 21%; }
+.selling_left_side .top_area .vbox:nth-child(2) { width: 44%; }
+.selling_left_side .top_area .vbox:nth-child(3) { width: 20%; }
+.selling_left_side .top_area .vbox:nth-child(4) { width: 12%; }
+.size { border: 1px dashed #FDC186; }
+.color { border: 1px dashed #CEBFE7; }
+.quantity { border: 1px dashed #B3FBC4; }
+.icon_button { border: 1px dashed #e56b6f; }
+
+
+.selling_left_side .error_area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    height: 0px;
+    margin: 0.5em 0em;
+    padding: 0em 0em;
+    border-radius: 0em;
+    border: 0px dotted #4a4d56;
+    transition: 1px cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.selling_left_side .error_area.active_error {
+    border: 1px dotted #4a4d56;
+    padding: 1em 1em;
+    height: 60px;
+    border-radius: 0.5em;
+}
+
+.error_area .error_message { font-size: 1.2em; }
+.error_area .action_buttons button {
+    margin: 0em 0.5em;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.selling_left_side .middle_area {
+    width: 100%;
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.5em;
+    flex-grow: 1;
+    overflow-y: scroll;
+    /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); */
+}
+
+.middle_area::-webkit-scrollbar { display: none; }
+
+.bottom_area .vbox:nth-child(1) { width: 50%; }
+.bottom_area .vbox:nth-child(2) { width: 49%; }
+
+.sub_bottom_area .vbox:nth-child(1) { width: 10%; }
+.sub_bottom_area .vbox:nth-child(2) { width: 24%; }
+.sub_bottom_area .vbox:nth-child(3) { width: 24%; }
+.sub_bottom_area .vbox:nth-child(4) { width: 24%; }
+.empty_panier { font-size: 3em; }
+
+
+.show .options {
+    position: absolute;
+    right: 2.3em;
+    top: 1em;
+    padding: 1em;
+    border-radius: 0.3em;
+    border: 1px dashed #FDC186;
+    background-color: #fff;
+    color: #000;
+    z-index: 1;
+}
+
+.favourite *, .delete * { margin: 0em 0.5em; }
+.delivery_text { font-size: 1.5em; }
+
+
+
+.delivery_options, .tax_options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0.5em;
+    width: 49%;
+}
+
+.delivery_tax { margin-bottom: 0em !important; }
+.invoice_buyer { margin-bottom: 1em !important; }
+.buyer_address { margin-bottom: 0em !important; }
+.invoice_detail { margin-bottom: 0em !important; }
+.buyer_paid_deadline { margin-bottom: 0em !important; }
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 8em;
+    height: 1.9em;
+    border-radius: 5px;
+    border: 1px dashed #FDC186;
+    cursor: pointer;
+    transition: all .3s;
+    overflow: hidden;
+    box-shadow: 0px 0px 2px rgba(0,0,0, .3);
+}
+
+.switch input { display: none; }
+
+.switch input:checked + div {
+    left: calc(6em - 1em);
+    box-shadow: 0px 0px 0px white;
+}
+
+.switch div {
+    position: absolute;
+    width: 2.6em;
+    height: 1.4em;
+    border-radius: 0.2em;
+    background-color: #fff;
+    top: 0.2em;
+    left: 0.3em;
+    box-shadow: 0px 0px 1px rgb(150,150,150);
+    transition: all .3s;
+}
+
+.switch div:before, .switch div:after {
+    position: absolute;
+    content: '';
+    width: calc(8em - 1.2em);
+    height: 1.4em;
+    line-height: 1.4em;
+    font-family: 'Varela Round';
+    font-size: 14px;
+    font-weight: bold;
+    top: -0.3em;
+}
+.switch div:before {
+    content: '';
+    color: rgb(120,120,120);
+    left: 100%;
+}
+
+.switch div:after {
+    content: '';
+    right: 100%;
+    color: white;
+}
+
+.switch-checked {
+    background-color : #FDC186;
+    box-shadow: none;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.selling_right_side .vbox label { font-size: 0.75em; color: #777;}
+.horizontal_seperation {
+    width: 100%;
+    height: 0.1em;
+    border-bottom: 0.15em dashed #4a4d56;
+    margin: 0.5em 0em;
+    align-self: center;
+}
+
+.selling_right_side .delivery_tax,
+.selling_right_side .buyer_details,
+.selling_right_side .invoice_detail, 
+.selling_right_side .buyer_paid_deadline {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    margin: 0.5em 0em;
+    padding: 0.5em 0.5em;
+    font-size: 1.2em;
+    color: #a7a8b5;
+    border: 1px solid #4a4d56;
+    border-radius: 0.5em;
+}
+
+.selling_right_side .delivery_tax { flex-direction: row; }
+.selling_right_side .buyer_details { flex-direction: column; }
+.selling_right_side .invoice_detail { flex-direction: column; margin-top: 0; }
+
+.selling_right_side .line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5em 0em;
+    font-size: 0.95em;
+    color: #a7a8b5;
+}
+
+.delivery_tax label {
+    text-align: left;
+}
+
+.line.total, .line.subtotal { color: #fff; }
+.vbox .selection {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    width: 8em;
+    font-size: 1.2em;
+    width: 100%;
+    cursor: pointer;
+    /* border: 1px dashed #FDC186; */
+    padding: 0.2em 0.5em;
+    border-radius: 0.4em;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.delivery_options .selection { 
+    border: 1px dashed #E2D5FA;
+    transition: 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+.tax_options .selection { 
+    border: 1px dashed #FBF9D4;
+    transition: 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.delivery_options .selection:hover {
+    background-color: #E2D5FA;
+    color: #9076B2;
+}
+
+.tax_options .selection:hover {
+    background-color: #FBF9D4;
+    color: #AA9C68;
+}
+
+.vbox .selection .chevrons {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.vbox .selection .chevrons * {
+    padding: 0;
+    margin: 0;
+}
+
+.tax_options .selection:last-child:hover *:last-child { color: #AA9C68; }
+.delivery_options .selection:last-child:hover *:last-child { color: #9076B2; }
+
+.vbox .options {
+    position: absolute;
+    right: 0em;
+    top: 2.8em;
+    padding: 0.4em;
+    border-radius: 0.3em;
+    border: 1px dashed #FDC186;
+    background-color: #252632;
+    color: #fff;
+    z-index: 1;
+}
+
+.vbox .options * { padding: 0.5em 1em; cursor: pointer; border-radius: 0.3em;}
+.vbox .options *:hover { background-color: #45464F; }
+.button {
+    display: flex;
+    flex-direction: column;
+}
+
+.selling_right_side .button button:first-child { 
+    margin: 1em 0em;
+    color: #fff;
+    border: 1px dashed #06d6a0;
+    color: #06d6a0;
+    box-shadow: none;
+    font-size: 1.2em;
+    transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.selling_right_side .button button:first-child:hover {
+    background-color: #06d6a0;
+    color: #fff;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}

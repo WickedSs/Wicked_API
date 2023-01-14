@@ -1,0 +1,280 @@
+
+.setting_scene {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%; height: 100%;
+    padding: 3em 1.5em;
+    font-family: Rubik-Regular;
+}
+
+.setting_scene > div { width: 100%; }
+
+.product_detail_settings {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.product_detail_title,
+.account_detail_title {
+    font-size: 1.5em;
+    color: #a7a8b5;
+    margin-bottom: 0.5em;
+}
+
+.product_detail_inputs,
+.account_detail_inputs {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em 0em;
+    margin-bottom: 2.5em;
+}
+
+.account_detail_inputs { margin-bottom: 0.5em; }
+
+.product_detail_inputs .set,
+.account_detail_inputs .set {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0.25em 0em;
+    margin: 0em 0.15em;
+}
+
+.account_detail_inputs .set { margin: 0.5em 0.15em; }
+
+.product_detail_inputs .set:first-child { margin-left: 0; }
+.account_detail_inputs .set:first-child { margin-left: 0; }
+
+.product_detail_inputs .set label,
+.account_detail_inputs .set label {
+    margin-bottom: 0.25em;
+    color: #777;
+    margin: 0em 1em;
+    /* animation: fadeOut 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+.product_detail_inputs .set label.show,
+.account_detail_inputs .set label.show {
+    opacity: 1;
+    transition: margin-bottom 0.5s opacity 0.5s;
+}
+
+.product_detail_inputs .set input, 
+.product_detail_inputs.set textarea, 
+.account_detail_inputs .set input,
+.account_detail_inputs.set textarea,
+.account .selected input, 
+.account_item input {
+    width: 100%;
+    font-size: 1.2em;
+    background-color: #252632;
+    border: 1px dashed #4a4a4a;
+    padding: 0.5em 0.5em;
+    /* border-radius: 1em 0.5em; */
+    resize: none;
+    outline: none;
+}
+.account_detail_inputs .set input { border-radius: 0; }
+
+.account_table {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em 0;
+}
+
+.account_item:first-child { margin-left: 0; }
+.account_item:last-child { margin-right: 0; }
+
+.account_item {
+    padding: 0.25em 0em;
+    margin: 0em 0.15em;
+    border: 1px dashed #3F4552;
+    background-color: #252632;
+}
+
+.account_item label {
+    color: #777;
+    padding: 0em 0.5em;
+}
+
+.account_item input {
+    border-radius: 0em;
+    border-style: solid;
+    border: 0;
+    box-shadow: none;
+    color: #fff;
+    border-radius: 0;
+}
+
+/* .account_item:nth-child(n+1) { border-right-width: 0px; } */
+.account_item:last-child, .account_item:last-child input { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right-width: 1px;
+    cursor: pointer;
+    transition: 1s cubic-bezier(0.215, 0.610, 0.355, 1)
+}
+
+.account_item:last-child:hover {
+    border-color: #63B4FF;
+    border-style: dashed;
+    /* background-color: #63B4FF; */
+}
+
+
+.account_item.monthly_expenses,
+.account_item.monthly_expenses input,
+.account_item.user_type,
+.account_item.user_type input,
+.account_item.user_role,
+.account_item.user_role input,
+.account_item.employment_date,
+.account_item.employment_date input {
+    border-color: #d9d9d9 !important;
+    border-width: 2px;
+    /* background-color: #d9d9d9; */
+    color: #fff;
+}
+
+.table.account {
+    border: 1px solid #0077b6;
+    background-color: #0077b6;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.table.account, .table.new_item {
+    margin: 0.15em 0em;
+}
+
+.table.account .table_head,
+.table.new_item .table_fix_item,
+.table.item .table_item {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table.account thead,
+.table.new_item tbody,
+.table.item tbody {
+    vertical-align: middle;
+}
+
+.table.account th {
+    font-weight: normal;
+    text-align: left;
+    padding: 1em 0.5em;
+}
+
+.table.new_item .thead_tr_header input,
+.table.item .tbody_tr_item input {
+    border-radius: 0em;
+    border-style: dashed;
+    border-width: 0px;
+    background-color: transparent;
+    box-shadow: none;
+    color: #3F4552;
+    border-radius: 0;
+    width: 100%;
+}
+
+.table.new_item .thead_tr_header input {
+    border-width: 1px;
+}
+
+.table.item .tbody_tr_item input {
+    color: #fff;
+    border-color: #4a4a4a;
+}
+
+.table.new_item .thead_tr_header label,
+.table.item .tbody_tr_item label,
+.table.new_item .thead_tr_header label {
+    font-size: 1.2em;
+    font-weight: normal;
+    border-width: 0;
+    border-radius: 0.25em;
+    background-color: transparent;
+    text-transform: uppercase;
+}
+
+.table.new_item .thead_tr_header label {
+    width: 100%;
+    cursor: pointer;
+    color: #fff;
+}
+
+.table.item .tbody_tr_item label {
+    width: 100%;
+    cursor: pointer;
+    padding: 0.15em 0em;
+    color: #fff;
+}
+
+.table.new_item .thead_tr_header label:hover {
+    color: #00bbf9;
+}
+
+.table.item .tbody_tr_item label:hover {
+    color: #2ec4b6;
+}
+
+.table.item .tbody_tr_item:nth-child(even) {
+    background-color: #252632;
+}
+
+.table.item .tbody_tr_item:nth-child(odd) {
+    background-color: #3F4552;
+}
+
+
+
+
+.table.account .thead_tr_header th:nth-child(1),
+.table.new_item .thead_tr_header th:nth-child(1),
+.table.item .tbody_tr_item th:nth-child(1) { 
+    width: 20%;
+}
+
+.table.account .thead_tr_header th:nth-child(2),
+.table.new_item .thead_tr_header th:nth-child(2),
+.table.item .tbody_tr_item th:nth-child(2) { 
+    width: 18%;
+}
+
+.table.account .thead_tr_header th:nth-child(3),
+.table.new_item .thead_tr_header th:nth-child(3),
+.table.item .tbody_tr_item th:nth-child(3) { 
+    width: 12%; 
+}
+
+.table.account .thead_tr_header th:nth-child(4),
+.table.new_item .thead_tr_header th:nth-child(4),
+.table.item .tbody_tr_item th:nth-child(4) { 
+    width: 12%;
+}
+
+.table.account .thead_tr_header th:nth-child(5),
+.table.new_item .thead_tr_header th:nth-child(5),
+.table.item .tbody_tr_item th:nth-child(5) {
+    width: 12%;
+}
+
+.table.account .thead_tr_header th:nth-child(6),
+.table.new_item .thead_tr_header th:nth-child(6),
+.table.item .tbody_tr_item th:nth-child(6) {
+    width: 12%;
+}
+.table.account .thead_tr_header th:nth-child(7),
+.table.new_item .thead_tr_header th:nth-child(7),
+.table.item .tbody_tr_item th:nth-child(7) {
+    width: 7%;
+}
+

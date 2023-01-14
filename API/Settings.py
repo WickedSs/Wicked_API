@@ -1,5 +1,5 @@
-from typing import Any, Dict, List, Optional, Union
-from pydantic import AnyHttpUrl, BaseSettings, EmailStr, Field, HttpUrl, PostgresDsn, validator
+from typing import Any, Dict, List, Optional
+from pydantic import AnyHttpUrl, BaseSettings, Field, PostgresDsn, validator
 
 
 
@@ -7,17 +7,19 @@ from pydantic import AnyHttpUrl, BaseSettings, EmailStr, Field, HttpUrl, Postgre
 
 class Settings(BaseSettings):
     API_V1_STR = "/api"
-    PROJECT_NAME: str = "Wicked API"
+    PROJECT_NAME: str = "Wicked API -- Developed by Souleymane Guerida"
     ALGORITHM = "HS256"
     
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1 # 60 * 4
+    REFRESH_TOKEN_EXPIRE_MINUTES: int = 10 # 60 * 24
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
-    SECRET_KEY: str
+    SECRET_ACCESS_KEY: str
+    SECRET_REFRESH_KEY: str
 
-    MYSQL_SERVER: str = Field(..., env="MYSQL_HOST")
-    MYSQL_USER: str = Field(..., env="MYSQL_USERNAME")
-    MYSQL_PASSWORD: str = Field(..., env="MYSQL_PASSWORD")
-    MYSQL_DB: str = Field(..., env="MYSQL_DATABASE")
+    # MYSQL_SERVER: str = Field(..., env="MYSQL_HOST")
+    # MYSQL_USER: str = Field(..., env="MYSQL_USERNAME")
+    # MYSQL_PASSWORD: str = Field(..., env="MYSQL_PASSWORD")
+    # MYSQL_DB: str = Field(..., env="MYSQL_DATABASE")
 
     POSTGRES_SERVER: str = Field(..., env="POSTGRES_HOST")
     POSTGRES_USER: str = Field(..., env="POSTGRES_USERNAME")
@@ -29,12 +31,12 @@ class Settings(BaseSettings):
     SQLALCHEMY_POSTGRES_DATABASE_URI: Optional[str] = None
     
     
-    
     # @validator("SQLALCHEMY_MYSQL_DATABASE_URI", pre=True)
     # def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> str:
     #     if isinstance(v, str):
     #         return v
     #     return "mysql+pymysql://" + values.get("MYSQL_USER") + ":" + values.get("MYSQL_PASSWORD") + "@" + values.get("MYSQL_SERVER") + "/" + values.get('MYSQL_DB')
+
 
     @validator("SQLALCHEMY_POSTGRES_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
@@ -51,7 +53,7 @@ class Settings(BaseSettings):
 
     class Config:
         case_sensitive = True
-        env_file = '.env'
+        env_file = ".env"
         env_file_encoding = 'utf-8' 
     
 

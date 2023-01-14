@@ -1,0 +1,190 @@
+
+* {
+    font-family: Rubik-Regular;
+}
+
+.navigation_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 20%;
+    border-right: 1px dashed #4a4d56;
+    overflow: auto;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.navigation_container::-webkit-scrollbar { display: none; }
+
+.top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.5em 0.5em;
+}
+
+.logo, .exit {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.5rem;
+    font-family: Rubik-Regular;
+    padding: 0.5em 0.5em;
+    border-radius: 1rem;
+}
+
+.icon {
+    border-radius: 0.5em;
+    border: 3px solid #fff;
+    margin-right: 0.4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    width: 2.5em;
+    height: 2.5em;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.bottom:hover * {
+    color: #ff5a5f;
+}
+
+.icon_exit {
+    margin-right: 0.4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.sub-title {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+.trade_registry {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.7em 0.8em;
+    margin: 0.5em 0em;
+    border: 1px dashed #577590;
+    color: #fff;
+    font-size: 1.3em;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    user-select: none;
+}
+
+.trade_registry:hover {
+    background-color: #577590;
+}
+
+.trade_registry .selected {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.trade_registry .selected div:nth-child(1) {
+    white-space: nowrap; 
+    width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trade_registry .selected .chevrons {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.tab {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.7em 0.5em;
+    cursor: pointer;
+    font-family: Rubik-Regular;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    color: #888;
+    user-select: none;
+    transition: 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.tab_name { 
+    font-size: 1.2rem; 
+    margin-left: 0.8rem;
+}
+.tab_icon { 
+    width: 2rem; 
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.tabs_container {
+    margin-top: 2rem;
+    width: 100%;
+    padding: 20px 10px;
+    position: relative;
+}
+
+.tabs_container .tabs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+}
+
+.tabs .selected_tab {
+    position: absolute;
+    width: 100%;
+    height: 3.45em;
+    border: 1px dashed #fff;
+    border-radius: 0.25em;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    transition: 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.selected_tab.Sellings { top: 0em; left: 0em; }
+.selected_tab.Products { top: 3.40em; left: 0em; }
+.selected_tab.Expenses { top: 6.85em; left: 0em; }
+.selected_tab.Invoices { top: 10.20em; left: 0em; }
+.selected_tab.Settings { top: 13.6em; left: 0em; }
+
+
+
+
+

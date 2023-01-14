@@ -1,0 +1,133 @@
+
+
+* {
+    box-sizing: border-box;
+}
+
+.login {
+    padding: 20px;
+    height: 100%;
+    font-family: Rubik-Regular;
+    width: 100%;
+}
+
+.side {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.top_side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 5rem;
+}
+
+.logo_word {
+    font-size: 2rem;
+    padding: 0px 15px;
+}
+
+.middle_side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100%; */
+}
+
+form {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+
+.login form > div {
+    margin: 0.25em 0px;
+    width: 50%;
+}
+
+.right_side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type=password], input[type=text] {
+    padding: 0.5em 0.5em;
+    font-size: 18px;
+    outline: none;
+    border: none;
+    background-color: #262833;
+    border: 1px dashed #4a4d56 !important;
+    border-radius: 0.3rem;
+    font-family: Rubik-Regular;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.login input[type=checkbox] {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-family: Rubik-Regular;
+}
+
+
+.login button {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.5rem;
+    font-family: Rubik-Regular;
+    background-color: #7E57DA;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.user:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.password, .username {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.usernames_dropdown {
+    position: absolute;
+    top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 0.5rem;
+    z-index: 10;
+    background-color: #101936;
+    width: 100%;
+}
+
+.usernames_dropdown > div {
+    padding: 5px 10px;
+}
+
+.remember_me {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 0px;
+}
+
+.inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+ 
+
